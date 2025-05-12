@@ -1,0 +1,200 @@
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class BorderLayoutConverter {
+    BorderLayoutConverter() {
+        JFrame f = new JFrame("Border Layout Example");
+        f.setSize(400, 200);
+        f.setLayout(new BorderLayout());
+
+        JTextField textField = new JTextField();
+        JLabel resultLabel = new JLabel("Result: ");
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1, 3));
+
+        JButton binaryButton = new JButton("Binary");
+        JButton octalButton = new JButton("Octal");
+        JButton hexButton = new JButton("Hexa");
+
+        buttonPanel.add(binaryButton);
+        buttonPanel.add(octalButton);
+        buttonPanel.add(hexButton);
+
+        binaryButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int num = Integer.parseInt(textField.getText());
+                    resultLabel.setText("Result: " + Integer.toBinaryString(num));
+                } catch (Exception ex) {
+                    resultLabel.setText("Invalid Number");
+                }
+            }
+        });
+
+        octalButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int num = Integer.parseInt(textField.getText());
+                    resultLabel.setText("Result: " + Integer.toOctalString(num));
+                } catch (Exception ex) {
+                    resultLabel.setText("Invalid Number");
+                }
+            }
+        });
+
+        hexButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int num = Integer.parseInt(textField.getText());
+                    resultLabel.setText("Result: " + Integer.toHexString(num).toUpperCase());
+                } catch (Exception ex) {
+                    resultLabel.setText("Invalid Number");
+                }
+            }
+        });
+
+        f.add(textField, BorderLayout.NORTH);
+        f.add(buttonPanel, BorderLayout.CENTER);
+        f.add(resultLabel, BorderLayout.SOUTH);
+
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new BorderLayoutConverter();
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+A window with:
+- Text field at the top to enter a number.
+- Three buttons in the center: Binary, Octal, Hexa.
+- A result label at the bottom.
+Clicking a button shows the converted value in the label.
+*/
+---------------------------------------------------------------------------------------
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+
+public class FlowLayoutExample {
+    FlowLayoutExample() {
+        JFrame f = new JFrame("FlowLayout Example");
+        f.setSize(300, 150);
+        f.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 20));
+
+        JCheckBox c1 = new JCheckBox("Java");
+        JCheckBox c2 = new JCheckBox("Python");
+        JCheckBox c3 = new JCheckBox("C++");
+
+        f.add(c1);
+        f.add(c2);
+        f.add(c3);
+
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new FlowLayoutExample();
+    }
+}
+//Abhishek Palase
+---------------------------------------------------------------------------------------
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class GridLayoutSwap {
+    JButton[] buttons = new JButton[6];
+
+    GridLayoutSwap() {
+        JFrame f = new JFrame("GridLayout Swap");
+        f.setSize(300, 200);
+        f.setLayout(new GridLayout(2, 3));
+
+        for (int i = 0; i < 6; i++) {
+            buttons[i] = new JButton(String.valueOf(i + 1));
+            f.add(buttons[i]);
+            buttons[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    JButton clicked = (JButton) e.getSource();
+                    String temp = buttons[0].getText();
+                    buttons[0].setText(clicked.getText());
+                    clicked.setText(temp);
+                }
+            });
+        }
+
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new GridLayoutSwap();
+    }
+}
+//Abhishek Palase
+---------------------------------------------------------------------------------------
+//Abhishek Palase
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.*;
+
+public class FactorialApplet extends Applet {
+    TextField inputField;
+    Button calculateButton;
+    Label resultLabel;
+
+    public void init() {
+        // Create components
+        inputField = new TextField();
+        calculateButton = new Button("Calculate Factorial");
+        resultLabel = new Label("Result: ");
+        
+        // Add components to the applet
+        add(inputField);
+        add(calculateButton);
+        add(resultLabel);
+
+        // Set layout for the applet
+        setLayout(new FlowLayout());
+
+        // Add event listener to the button
+        calculateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int num = Integer.parseInt(inputField.getText());
+                    long factorial = calculateFactorial(num);
+                    resultLabel.setText("Result: " + factorial);
+                } catch (NumberFormatException ex) {
+                    resultLabel.setText("Invalid Input");
+                }
+            }
+        });
+    }
+
+    private long calculateFactorial(int num) {
+        long result = 1;
+        for (int i = 1; i <= num; i++) {
+            result *= i;
+        }
+        return result;
+    }
+}
+//Abhishek Palase
+
+<html>
+<body>
+<applet code="FactorialApplet.class" width="400" height="200"></applet>
+</body>
+</html>
+
+---------------------------------------------------------------------------------------

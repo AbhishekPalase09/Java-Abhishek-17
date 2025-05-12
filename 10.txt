@@ -1,0 +1,266 @@
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class MouseCoordinatesGUI {
+    MouseCoordinatesGUI() {
+        JFrame f = new JFrame("Mouse Coordinates");
+        f.setSize(400, 300);
+        f.setLayout(new FlowLayout());
+
+        JLabel label = new JLabel("Move mouse inside window");
+
+        f.add(label);
+
+        f.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseMoved(MouseEvent e) {
+                label.setText("X: " + e.getX() + " Y: " + e.getY());
+            }
+        });
+
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new MouseCoordinatesGUI();
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+Window with label showing:
+X: ___ Y: ___
+as you move the mouse inside the window
+*/
+-----------------------------------------------------------------------------
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class SimpleTimerGUI {
+    private int seconds = 0;
+    private boolean running = false;
+    private Timer timer;
+
+    SimpleTimerGUI() {
+        JFrame f = new JFrame("Simple Timer");
+        f.setSize(300, 200);
+        f.setLayout(new FlowLayout());
+
+        JLabel label = new JLabel("Time: 0s");
+        JButton startButton = new JButton("Start");
+        JButton stopButton = new JButton("Stop");
+
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (!running) {
+                    running = true;
+                    timer.start();
+                }
+            }
+        });
+
+        stopButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                running = false;
+                timer.stop();
+            }
+        });
+
+        timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (running) {
+                    seconds++;
+                    label.setText("Time: " + seconds + "s");
+                }
+            }
+        });
+
+        f.add(label);
+        f.add(startButton);
+        f.add(stopButton);
+
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new SimpleTimerGUI();
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+A window with:
+[Time: 0s] [Start] [Stop]
+Click Start to begin the timer and Stop to stop it.
+*/
+
+-----------------------------------------------------------------------------
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class ImageDisplayComboBoxGUI {
+    private JLabel imageLabel;
+
+    ImageDisplayComboBoxGUI() {
+        JFrame f = new JFrame("Image Display");
+        f.setSize(400, 300);
+        f.setLayout(new FlowLayout());
+
+        // Image names in JComboBox
+        String[] imageNames = {"Image1", "Image2", "Image3"};
+        JComboBox<String> comboBox = new JComboBox<>(imageNames);
+
+        imageLabel = new JLabel();
+        f.add(comboBox);
+        f.add(imageLabel);
+
+        // ItemListener to display selected image
+        comboBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                String selectedImage = (String) e.getItem();
+                displayImage(selectedImage);
+            }
+        });
+
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void displayImage(String imageName) {
+        ImageIcon icon = null;
+
+        // Change image path as needed
+        if (imageName.equals("Image1")) {
+            icon = new ImageIcon("path_to_image1.jpg");
+        } else if (imageName.equals("Image2")) {
+            icon = new ImageIcon("path_to_image2.jpg");
+        } else if (imageName.equals("Image3")) {
+            icon = new ImageIcon("path_to_image3.jpg");
+        }
+
+        // Display the selected image
+        if (icon != null) {
+            imageLabel.setIcon(icon);
+        }
+    }
+
+    public static void main(String[] args) {
+        new ImageDisplayComboBoxGUI();
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+A window with a JComboBox to select an image name.
+The corresponding image is displayed below based on the selection.
+*/
+
+-----------------------------------------------------------------------------
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class TextAreaWithCountGUI {
+    private JTextArea textArea;
+    private JLabel countLabel;
+
+    TextAreaWithCountGUI() {
+        JFrame f = new JFrame("Text Area with Count");
+        f.setSize(400, 300);
+        f.setLayout(new BorderLayout());
+
+        textArea = new JTextArea();
+        countLabel = new JLabel("Characters: 0, Words: 0");
+
+        textArea.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                updateCount();
+            }
+        });
+
+        f.add(new JScrollPane(textArea), BorderLayout.CENTER);
+        f.add(countLabel, BorderLayout.SOUTH);
+
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void updateCount() {
+        String text = textArea.getText();
+        int charCount = text.length();
+        String[] words = text.trim().split("\\s+");
+        int wordCount = words.length;
+
+        if (text.trim().isEmpty()) {
+            wordCount = 0;
+        }
+
+        countLabel.setText("Characters: " + charCount + ", Words: " + wordCount);
+    }
+
+    public static void main(String[] args) {
+        new TextAreaWithCountGUI();
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+A window with a JTextArea and a label below showing real-time:
+Characters: ___, Words: ___
+Updates as the user types in the text area.
+*/
+
+-----------------------------------------------------------------------------
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class BackgroundColorChangeGUI {
+    BackgroundColorChangeGUI() {
+        JFrame f = new JFrame("Background Color Change");
+        f.setSize(400, 300);
+        f.setLayout(new FlowLayout());
+
+        JButton colorButton = new JButton("Select Color");
+
+        colorButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Color newColor = JColorChooser.showDialog(f, "Choose Background Color", f.getBackground());
+                if (newColor != null) {
+                    f.getContentPane().setBackground(newColor);
+                }
+            }
+        });
+
+        f.add(colorButton);
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new BackgroundColorChangeGUI();
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+A window with a "Select Color" button.
+Clicking the button opens a color picker dialog.
+The background color of the window changes based on the selected color.
+*/
+
+--------------------------------------------------------------------------------

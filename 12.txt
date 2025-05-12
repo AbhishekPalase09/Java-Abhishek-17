@@ -1,0 +1,152 @@
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class BouncingBall extends JPanel implements Runnable {
+    int x = 50, y = 50, diameter = 30;
+    int xVelocity = 2, yVelocity = 2;
+    Thread ballThread;
+
+    public BouncingBall() {
+        setPreferredSize(new Dimension(400, 300));
+        setBackground(Color.WHITE);
+
+        // Start ball movement when mouse is pressed
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                if (ballThread == null || !ballThread.isAlive()) {
+                    ballThread = new Thread(BouncingBall.this);
+                    ballThread.start();
+                }
+            }
+        });
+    }
+
+    public void run() {
+        while (true) {
+            // Update ball position
+            x += xVelocity;
+            y += yVelocity;
+
+            // Check for collision with panel edges and bounce
+            if (x <= 0 || x + diameter >= getWidth()) {
+                xVelocity = -xVelocity; // Reverse horizontal direction
+            }
+            if (y <= 0 || y + diameter >= getHeight()) {
+                yVelocity = -yVelocity; // Reverse vertical direction
+            }
+
+            // Repaint to update the ball position
+            repaint();
+
+            try {
+                Thread.sleep(10); // Control speed of ball movement
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.BLUE);
+        g.fillOval(x, y, diameter, diameter);
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Bouncing Ball");
+        BouncingBall panel = new BouncingBall();
+        frame.add(panel);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+A window opens with a white background and a blue ball. When you click inside the window,
+ the ball starts bouncing and reverses direction when it hits the edges.
+*/
+---------------------------------------------------------------------------------------------------------------
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Stopwatch {
+    private static boolean running = false;
+    private static int seconds = 0, minutes = 0, hours = 0;
+    private static Thread timerThread;
+
+    private static JLabel timeLabel = new JLabel("00:00:00", JLabel.CENTER);
+    private static JButton startStopButton = new JButton("Start");
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Stopwatch");
+        frame.setSize(300, 150);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+
+        timeLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        frame.add(timeLabel, BorderLayout.CENTER);
+
+        JPanel panel = new JPanel();
+        panel.add(startStopButton);
+        frame.add(panel, BorderLayout.SOUTH);
+
+        startStopButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (!running) {
+                    running = true;
+                    startStopButton.setText("Stop");
+                    startTimer();
+                } else {
+                    running = false;
+                    startStopButton.setText("Start");
+                    timerThread.interrupt();
+                }
+            }
+        });
+
+        frame.setVisible(true);
+    }
+
+    private static void startTimer() {
+        timerThread = new Thread(new Runnable() {
+            public void run() {
+                while (running) {
+                    try {
+                        Thread.sleep(1000);
+                        updateTime();
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+                }
+            }
+        });
+        timerThread.start();
+    }
+
+    private static void updateTime() {
+        seconds++;
+        if (seconds == 60) {
+            seconds = 0;
+            minutes++;
+        }
+        if (minutes == 60) {
+            minutes = 0;
+            hours++;
+        }
+
+        timeLabel.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+A window with a digital clock showing 00:00:00. Clicking "Start" begins the stopwatch, and clicking "Stop" pauses it.
+*/

@@ -1,0 +1,217 @@
+CREATE DATABASE school;
+
+USE school;
+
+CREATE TABLE student (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT,
+    grade VARCHAR(10)
+);
+
+INSERT INTO student (id, name, age, grade) VALUES
+(1, 'Nihal', 20, 'A'),
+(2, 'Ishan', 22, 'B'),
+(3, 'Pratik', 21, 'A');
+
+//Abhishek Palase
+import java.sql.*;
+
+public class StudentDatabase {
+    public static void main(String[] args) {
+        // JDBC URL, username, and password for MySQL
+        String url = "jdbc:mysql://localhost:3306/school"; // Change to your database URL and port
+        String user = "root"; // Change to your MySQL username
+        String password = "password"; // Change to your MySQL password
+
+        // SQL query to fetch data from the student table
+        String query = "SELECT * FROM student";
+
+        try {
+            // Load and register MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establish a connection to the database
+            Connection connection = DriverManager.getConnection(url, user, password);
+
+            // Create a statement object to execute the query
+            Statement statement = connection.createStatement();
+
+            // Execute the query and get the result set
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // Display the contents of the student table
+            System.out.println("ID | Name         | Age | Grade");
+            System.out.println("------------------------------------");
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                String grade = resultSet.getString("grade");
+
+                // Print each student's information
+                System.out.printf("%-3d %-12s %-4d %-6s%n", id, name, age, grade);
+            }
+
+            // Close the result set, statement, and connection
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            // Handle any SQL or JDBC errors
+            e.printStackTrace();
+        }
+    }
+}
+//Abhishek Palase
+------------------------------------------------------------------------------------------
+CREATE DATABASE school;
+
+USE school;
+
+CREATE TABLE student (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    age INT,
+    grade VARCHAR(10)
+);
+
+//Abhishek Palase
+import java.sql.*;
+import java.util.Scanner;
+
+public class StudentDBOperations {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/school";
+        String user = "root";
+        String password = "password";
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement();
+
+            System.out.println("1. Select\n2. Insert\n3. Update\n4. Delete");
+            int ch = sc.nextInt();
+
+            if (ch == 1) {
+                ResultSet rs = st.executeQuery("SELECT * FROM student");
+                while (rs.next()) {
+                    System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getInt(3));
+                }
+            } else if (ch == 2) {
+                System.out.println("Enter id, name, age");
+                int id = sc.nextInt();
+                String name = sc.next();
+                int age = sc.nextInt();
+                String q = "INSERT INTO student VALUES(" + id + ",'" + name + "'," + age + ")";
+                int i = st.executeUpdate(q);
+                if (i > 0) System.out.println("Inserted");
+            } else if (ch == 3) {
+                System.out.println("Enter id to update name and age");
+                int id = sc.nextInt();
+                String name = sc.next();
+                int age = sc.nextInt();
+                String q = "UPDATE student SET name='" + name + "', age=" + age + " WHERE id=" + id;
+                int i = st.executeUpdate(q);
+                if (i > 0) System.out.println("Updated");
+            } else if (ch == 4) {
+                System.out.println("Enter id to delete");
+                int id = sc.nextInt();
+                String q = "DELETE FROM student WHERE id=" + id;
+                int i = st.executeUpdate(q);
+                if (i > 0) System.out.println("Deleted");
+            }
+
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+------------------------------------------------------------------------------------------
+CREATE DATABASE loginapp;
+USE loginapp;
+
+CREATE TABLE users (
+    username VARCHAR(100) PRIMARY KEY,
+    password VARCHAR(100)
+);
+
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class LoginForm extends JFrame implements ActionListener {
+    JTextField user;
+    JPasswordField pass;
+    JButton login, register;
+
+    LoginForm() {
+        setTitle("Login Form");
+        setSize(300, 200);
+        setLayout(new GridLayout(3, 2));
+
+        add(new JLabel("Username:"));
+        user = new JTextField();
+        add(user);
+
+        add(new JLabel("Password:"));
+        pass = new JPasswordField();
+        add(pass);
+
+        login = new JButton("Login");
+        register = new JButton("Register");
+        add(login);
+        add(register);
+
+        login.addActionListener(this);
+        register.addActionListener(this);
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        String u = user.getText();
+        String p = new String(pass.getPassword());
+        String url = "jdbc:mysql://localhost:3306/loginapp";
+        String dbuser = "root";
+        String dbpass = "password";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, dbuser, dbpass);
+            Statement st = con.createStatement();
+
+            if (e.getSource() == register) {
+                String q = "INSERT INTO users VALUES('" + u + "','" + p + "')";
+                int i = st.executeUpdate(q);
+                if (i > 0) JOptionPane.showMessageDialog(this, "Registered");
+            }
+
+            if (e.getSource() == login) {
+                String q = "SELECT * FROM users WHERE username='" + u + "' AND password='" + p + "'";
+                ResultSet rs = st.executeQuery(q);
+                if (rs.next()) JOptionPane.showMessageDialog(this, "Login Successful");
+                else JOptionPane.showMessageDialog(this, "Invalid Credentials");
+            }
+
+            con.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        new LoginForm();
+    }
+}
+//Abhishek Palase
+
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------

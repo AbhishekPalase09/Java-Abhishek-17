@@ -1,0 +1,150 @@
+//Abhishek Palase
+import javax.swing.*;  
+import java.awt.*;
+import java.awt.event.*;
+
+public class CounterGUI {
+    int count = 0;
+    JLabel label;
+
+    CounterGUI() {
+        JFrame f = new JFrame("Counter");
+        f.setSize(300, 200);
+        f.setLayout(new FlowLayout());
+
+        label = new JLabel("Count: 0");
+        JButton up = new JButton("Count Up");
+        JButton down = new JButton("Count Down");
+        JButton reset = new JButton("Reset");
+
+        up.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                count++;
+                label.setText("Count: " + count);
+            }
+        });
+
+        down.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                count--;
+                label.setText("Count: " + count);
+            }
+        });
+
+        reset.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                count = 0;
+                label.setText("Count: " + count);
+            }
+        });
+
+        f.add(label);
+        f.add(up);
+        f.add(down);
+        f.add(reset);
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new CounterGUI();
+    }
+}
+//Abhishek Palase
+--------------------------------------------------------------------------------
+//Abhishek Palase
+import javax.swing.*;  import java.awt.*;
+import java.awt.event.*;
+
+public class ReverseNumberGUI {
+    ReverseNumberGUI() {
+        JFrame f = new JFrame("Reverse Number");
+        f.setSize(300, 200);
+        f.setLayout(new FlowLayout());
+
+        JLabel l1 = new JLabel("Enter Number:");
+        JTextField t1 = new JTextField(10);
+        JButton b = new JButton("Reverse");
+        JLabel result = new JLabel();
+
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String numStr = t1.getText();
+                String rev = new StringBuilder(numStr).reverse().toString();
+                result.setText("Reverse: " + rev);
+            }
+        });
+
+        f.add(l1);
+        f.add(t1);
+        f.add(b);
+        f.add(result);
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new ReverseNumberGUI();
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+A window:
+Enter Number: [1234] [Reverse]
+Click -> Reverse: 4321
+*/
+--------------------------------------------------------------------------
+//Abhishek Palase
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class GenderSelectionGUI {
+    GenderSelectionGUI() {
+        JFrame f = new JFrame("Gender Selection");
+        f.setSize(300, 200);
+        f.setLayout(new FlowLayout());
+
+        JRadioButton male = new JRadioButton("Male");
+        JRadioButton female = new JRadioButton("Female");
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(male);
+        bg.add(female);
+
+        JButton b = new JButton("Submit");
+        JLabel result = new JLabel();
+
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(male.isSelected())
+                    result.setText("Selected: Male");
+                else if(female.isSelected())
+                    result.setText("Selected: Female");
+                else
+                    result.setText("No selection");
+            }
+        });
+
+        f.add(male);
+        f.add(female);
+        f.add(b);
+        f.add(result);
+
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+        new GenderSelectionGUI();
+    }
+}
+//Abhishek Palase
+
+/*
+Output:
+[ Male ] [ Female ] [ Submit ]
+Click -> Selected: Male / Female
+*/

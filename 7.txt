@@ -1,0 +1,215 @@
+ //Abhishek Palase
+
+import java.io.*; 
+public class ReadFile {
+    public static void main(String[] args) {
+        try {
+            FileReader fr = new FileReader("D:/sample.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+            br.close();
+            fr.close();
+        } catch (IOException e) {
+            System.out.println("File not found.");
+        }
+    }
+}
+//Abhishek Palase
+
+/*
+Output if sample.txt contains:
+Hello World
+Welcome to Java
+
+Console:
+Hello World
+Welcome to Java
+*/
+---------------------------------------------------------------------
+ //Abhishek Palase
+import java.io.*; 
+import java.util.*;
+
+public class StudentInfo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        try {
+            FileOutputStream fos = new FileOutputStream("D:/student.dat");
+            DataOutputStream dos = new DataOutputStream(fos);
+
+            System.out.print("Enter name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter age: ");
+            int age = sc.nextInt();
+            System.out.print("Enter weight: ");
+            double weight = sc.nextDouble();
+            System.out.print("Enter height: ");
+            double height = sc.nextDouble();
+            sc.nextLine();
+            System.out.print("Enter city: ");
+            String city = sc.nextLine();
+            System.out.print("Enter phone number: ");
+            String phone = sc.nextLine();
+
+            dos.writeUTF(name);
+            dos.writeInt(age);
+            dos.writeDouble(weight);
+            dos.writeDouble(height);
+            dos.writeUTF(city);
+            dos.writeUTF(phone);
+
+            dos.close();
+            fos.close();
+
+            FileInputStream fis = new FileInputStream("D:/student.dat");
+            DataInputStream dis = new DataInputStream(fis);
+
+            System.out.println("\nStudent Information:");
+            System.out.println("Name: " + dis.readUTF());
+            System.out.println("Age: " + dis.readInt());
+            System.out.println("Weight: " + dis.readDouble());
+            System.out.println("Height: " + dis.readDouble());
+            System.out.println("City: " + dis.readUTF());
+            System.out.println("Phone: " + dis.readUTF());
+
+            dis.close();
+            fis.close();
+        } catch (IOException e) {
+            System.out.println("Error");
+        }
+    }
+}
+//Abhishek Palase
+
+/*
+Sample Output:
+Enter name: Abhi
+Enter age: 19
+Enter weight: 60
+Enter height: 170
+Enter city: Kolhapur
+Enter phone number: 9876543210
+
+Student Information:
+Name: Abhi
+Age: 19
+Weight: 60.0
+Height: 170.0
+City: Kolhapur
+Phone: 9876543210
+*/
+----------------------------------------------------------------------
+//Abhishek Palase
+import java.io.*;  //Abhishek Palase
+
+public class FileStats {
+    public static void main(String[] args) {
+        int vowels = 0, words = 0, aCount = 0;
+        try {
+            FileReader fr = new FileReader("D:/sample.txt");
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while((line = br.readLine()) != null) {
+                String[] w = line.split("\\s+");
+                words += w.length;
+                for(char c : line.toLowerCase().toCharArray()) {
+                    if("aeiou".indexOf(c) != -1) vowels++;
+                    if(c == 'a') aCount++;
+                }
+            }
+            br.close();
+            fr.close();
+            System.out.println("Total vowels: " + vowels);
+            System.out.println("Total words: " + words);
+            System.out.println("Total 'a': " + aCount);
+        } catch (IOException e) {
+            System.out.println("File error.");
+        }
+    }
+}
+//Abhishek Palase
+
+/*
+If sample.txt contains:
+Abhishek Palase is learning Java.
+
+Console:
+Total vowels: 11
+Total words: 5
+Total 'a': 5
+*/
+---------------------------------------------------------------------------
+//Abhishek Palase
+import java.io.*;  //Abhishek Palase
+import java.util.*;
+
+public class FileEditor {
+    public static void main(String[] args) {
+        if(args.length == 0) {
+            System.out.println("No file name given.");
+            return;
+        }
+        Scanner sc = new Scanner(System.in);
+        String fileName = args[0];
+        File f = new File(fileName);
+        try {
+            if(f.exists()) {
+                FileReader fr = new FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+                String line;
+                System.out.println("File contents:");
+                while((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+                br.close();
+                fr.close();
+
+                System.out.print("Do you want to add data to the end of the file? (Yes/No): ");
+                String res = sc.nextLine();
+                if(res.equalsIgnoreCase("Yes")) {
+                    FileWriter fw = new FileWriter(f, true);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    System.out.println("Enter data (type 'exit' to stop):");
+                    while(true) {
+                        String data = sc.nextLine();
+                        if(data.equalsIgnoreCase("exit")) break;
+                        bw.write(data);
+                        bw.newLine();
+                    }
+                    bw.close();
+                    fw.close();
+                }
+            } else {
+                FileWriter fw = new FileWriter(f);
+                BufferedWriter bw = new BufferedWriter(fw);
+                System.out.println("New file created. Enter data (type 'exit' to stop):");
+                while(true) {
+                    String data = sc.nextLine();
+                    if(data.equalsIgnoreCase("exit")) break;
+                    bw.write(data);
+                    bw.newLine();
+                }
+                bw.close();
+                fw.close();
+            }
+        } catch (IOException e) {
+            System.out.println("Error.");
+        }
+    }
+}
+//Abhishek Palase
+
+/*
+Console:
+File contents:
+Hello World
+Do you want to add data to the end of the file? (Yes/No): Yes
+Enter data (type 'exit' to stop):
+New Line
+exit
+
+File updated.
+*/

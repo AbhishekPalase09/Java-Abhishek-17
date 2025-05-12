@@ -1,0 +1,228 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Calculator extends JFrame implements ActionListener {
+
+    JTextField textField;
+    JButton[] numberButtons = new JButton[10];
+    JButton addBtn, subBtn, mulBtn, divBtn;
+    JButton eqBtn, clrBtn, perBtn, sqBtn, sqrtBtn, cubeBtn;
+    double num1 = 0, num2 = 0, result = 0;
+    char operator;
+
+    public Calculator() {
+        setTitle("Standard Calculator");
+        setSize(400, 500);
+        setLayout(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        textField = new JTextField();
+        textField.setBounds(30, 30, 320, 50);
+        textField.setFont(new Font("Arial", Font.BOLD, 20));
+        textField.setEditable(false);
+        add(textField);
+
+        addBtn = new JButton("+");
+        subBtn = new JButton("-");
+        mulBtn = new JButton("*");
+        divBtn = new JButton("/");
+        eqBtn = new JButton("=");
+        clrBtn = new JButton("C");
+        perBtn = new JButton("%");
+        sqBtn = new JButton("x²");
+        sqrtBtn = new JButton("√");
+        cubeBtn = new JButton("x³");
+
+        JButton[] funcButtons = {addBtn, subBtn, mulBtn, divBtn, eqBtn, clrBtn, perBtn, sqBtn, sqrtBtn, cubeBtn};
+
+        for (JButton btn : funcButtons) {
+            btn.addActionListener(this);
+            btn.setFont(new Font("Arial", Font.BOLD, 18));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            numberButtons[i] = new JButton(String.valueOf(i));
+            numberButtons[i].addActionListener(this);
+            numberButtons[i].setFont(new Font("Arial", Font.BOLD, 18));
+        }
+
+        JPanel panel = new JPanel();
+        panel.setBounds(30, 100, 320, 300);
+        panel.setLayout(new GridLayout(5, 4, 10, 10));
+
+        // Adding buttons to panel
+        panel.add(numberButtons[7]);
+        panel.add(numberButtons[8]);
+        panel.add(numberButtons[9]);
+        panel.add(addBtn);
+
+        panel.add(numberButtons[4]);
+        panel.add(numberButtons[5]);
+        panel.add(numberButtons[6]);
+        panel.add(subBtn);
+
+        panel.add(numberButtons[1]);
+        panel.add(numberButtons[2]);
+        panel.add(numberButtons[3]);
+        panel.add(mulBtn);
+
+        panel.add(numberButtons[0]);
+        panel.add(perBtn);
+        panel.add(eqBtn);
+        panel.add(divBtn);
+
+        panel.add(sqBtn);
+        panel.add(sqrtBtn);
+        panel.add(cubeBtn);
+        panel.add(clrBtn);
+
+        add(panel);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        for (int i = 0; i < 10; i++) {
+            if (e.getSource() == numberButtons[i]) {
+                textField.setText(textField.getText() + i);
+            }
+        }
+
+        if (e.getSource() == addBtn) {
+            num1 = Double.parseDouble(textField.getText());
+            operator = '+';
+            textField.setText("");
+        }
+        if (e.getSource() == subBtn) {
+            num1 = Double.parseDouble(textField.getText());
+            operator = '-';
+            textField.setText("");
+        }
+        if (e.getSource() == mulBtn) {
+            num1 = Double.parseDouble(textField.getText());
+            operator = '*';
+            textField.setText("");
+        }
+        if (e.getSource() == divBtn) {
+            num1 = Double.parseDouble(textField.getText());
+            operator = '/';
+            textField.setText("");
+        }
+        if (e.getSource() == perBtn) {
+            num1 = Double.parseDouble(textField.getText());
+            textField.setText(String.valueOf(num1 / 100));
+        }
+        if (e.getSource() == sqBtn) {
+            num1 = Double.parseDouble(textField.getText());
+            textField.setText(String.valueOf(num1 * num1));
+        }
+        if (e.getSource() == sqrtBtn) {
+            num1 = Double.parseDouble(textField.getText());
+            textField.setText(String.valueOf(Math.sqrt(num1)));
+        }
+        if (e.getSource() == cubeBtn) {
+            num1 = Double.parseDouble(textField.getText());
+            textField.setText(String.valueOf(num1 * num1 * num1));
+        }
+        if (e.getSource() == clrBtn) {
+            textField.setText("");
+        }
+        if (e.getSource() == eqBtn) {
+            num2 = Double.parseDouble(textField.getText());
+            switch (operator) {
+                case '+': result = num1 + num2; break;
+                case '-': result = num1 - num2; break;
+                case '*': result = num1 * num2; break;
+                case '/': 
+                    if (num2 != 0)
+                        result = num1 / num2;
+                    else {
+                        textField.setText("Error");
+                        return;
+                    }
+                    break;
+            }
+            textField.setText(String.valueOf(result));
+        }
+    }
+
+    public static void main(String[] args) {
+        new Calculator();
+    }
+}
+--------------------------------------------------------------------------------------
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
+
+public class CheckBoxExample extends JFrame implements ActionListener {
+
+    JLabel l;
+    JCheckBox cb1, cb2, cb3;
+    JButton b;
+
+    CheckBoxExample() {
+        setTitle("Stationery Purchase System");
+
+        l = new JLabel("Stationery Purchase System");
+        l.setBounds(50, 50, 300, 20);
+
+        cb1 = new JCheckBox("Notebook @ 50");
+        cb1.setBounds(100, 100, 150, 20);
+
+        cb2 = new JCheckBox("Pen @ 30");
+        cb2.setBounds(100, 150, 150, 20);
+
+        cb3 = new JCheckBox("Pencil @ 10");
+        cb3.setBounds(100, 200, 150, 20);
+
+        b = new JButton("Order");
+        b.setBounds(100, 250, 80, 30);
+        b.addActionListener(this);
+
+        add(l);
+        add(cb1);
+        add(cb2);
+        add(cb3);
+        add(b);
+
+        setSize(400, 400);
+        setLayout(null);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        float amount = 0;
+        String msg = "";
+
+        if (cb1.isSelected()) {
+            int q = Integer.parseInt(JOptionPane.showInputDialog(this, "Enter Quantity for Notebook"));
+            amount += 50 * q;
+            msg += "Notebook Quantity: " + q + "  Total: " + (50 * q) + "\n";
+        }
+
+        if (cb2.isSelected()) {
+            int q = Integer.parseInt(JOptionPane.showInputDialog(this, "Enter Quantity for Pen"));
+            amount += 30 * q;
+            msg += "Pen Quantity: " + q + "  Total: " + (30 * q) + "\n";
+        }
+
+        if (cb3.isSelected()) {
+            int q = Integer.parseInt(JOptionPane.showInputDialog(this, "Enter Quantity for Pencil"));
+            amount += 10 * q;
+            msg += "Pencil Quantity: " + q + "  Total: " + (10 * q) + "\n";
+        }
+
+        msg += "---------------------------\n";
+        msg += "Total Amount: ₹" + amount;
+
+        JOptionPane.showMessageDialog(this, msg);
+        JOptionPane.showMessageDialog(this, "Successfully Ordered.", "Alert", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public static void main(String[] args) {
+        new CheckBoxExample();
+    }
+}
+//Abhishek Palase

@@ -1,0 +1,121 @@
+// Abhishek Palase - Custom Exception
+class Odd extends Exception{
+    public Odd(String m){
+        super(m);
+    }
+}
+
+public class Main{
+    public static void num(int a) throws Odd{
+        if(a%2!=0){
+            throw new Odd("no. is odd");
+        }
+        System.out.println("no. is even");
+    }
+    public static void main(String[]args){
+        try{
+            num(4);
+        }catch (Odd e){
+            System.out.println("Exception: "+e.getMessage());
+        }
+    }
+}
+// output: Exception: no. is odd for a=3
+//no. is even for a=4
+//Abhishek Palase
+--------------------------------------------------------------------------------------------------------
+ABHISHEK PALASE
+
+package odd;
+public class Div extends Exception{
+    public Div(String m){
+        super(m);
+    }
+}
+
+package odd;
+public class calc extends Exception{
+    public void divide(int a , int b) throws Div {
+        if(b == 0){
+            throw new Div("denominator cannot be zero");    
+        }
+        System.out.println("result: "+a/b);
+    }
+}
+  
+import odd.*;
+public class Main 
+{
+	public static void main(String[] args) {
+	    calc c = new calc();
+	    try{
+	        c.divide(4,0);
+	    }catch (Exception e){
+		System.out.println("Exception:"+ e.getMessage());
+	}
+}
+}
+output: Exception:denominator cannot be zero  (when b=0)
+output: result: 2 (when b=2 and a=4)
+ABHISHEK PALASE
+--------------------------------------------------------------------------------
+
+ABHISHEK PALASE
+
+ class low extends Exception{
+  public  low(String m){
+        super(m);
+    }
+}
+public class negative extends Exception{
+ public  negative(String m){
+        super(m);
+    }
+}
+
+ public class bank {
+    int balance = 1000;
+    
+    public void show(){
+        System.out.println("balance: "+balance);
+    }
+    
+    public void add(int a) throws negative{
+        if(a<0){
+            throw new negative("deposite amount cannot be zero");
+        }
+        balance +=a;
+        System.out.println("added Rs. "+a);
+        System.out.println("balance: "+balance);
+    }
+    
+    public void sub(int a) throws negative,low{
+        if(a<0){
+            throw new negative("withdraw amount cannot be negative");
+        }
+        if(a>balance){
+            throw new low("Withdraw amount is more than the remaining balance.");
+        }
+        balance -=a;
+        System.out.println("withdraw Rs. "+a);
+        show();
+    }
+    
+}
+
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		bank b = new bank();
+		try{
+		    b.show();
+		    b.sub(1100);
+		    b.add(-200);
+		}catch (Exception e){
+		    System.out.println("Excetption: "+e.getMessage());
+		}
+	}
+}
+
+//ABHISHEK PALASE

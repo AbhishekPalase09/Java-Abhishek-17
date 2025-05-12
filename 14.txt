@@ -1,0 +1,110 @@
+//Abhishek Palase
+//server
+import java.io.*;
+import java.net.*;
+
+public class ChatServer {
+    public static void main(String[] args) throws Exception {
+        ServerSocket ss = new ServerSocket(1234);
+        System.out.println("Server started...");
+        Socket s = ss.accept();
+        System.out.println("Client connected...");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        PrintWriter pw = new PrintWriter(s.getOutputStream(), true);
+        BufferedReader kb = new BufferedReader(new InputStreamReader(System.in));
+
+        String str, msg;
+        while (true) {
+            str = br.readLine();
+            if (str.equalsIgnoreCase("exit")) break;
+            System.out.println("Client: " + str);
+            System.out.print("You: ");
+            msg = kb.readLine();
+            pw.println(msg);
+        }
+
+        s.close();
+        ss.close();
+    }
+}
+//client
+
+import java.io.*;
+import java.net.*;
+
+public class ChatClient {
+    public static void main(String[] args) throws Exception {
+        Socket s = new Socket("localhost", 1234);
+        System.out.println("Connected to server...");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        PrintWriter pw = new PrintWriter(s.getOutputStream(), true);
+        BufferedReader kb = new BufferedReader(new InputStreamReader(System.in));
+
+        String str, msg;
+        while (true) {
+            System.out.print("You: ");
+            msg = kb.readLine();
+            pw.println(msg);
+            if (msg.equalsIgnoreCase("exit")) break;
+            str = br.readLine();
+            System.out.println("Server: " + str);
+        }
+
+        s.close();
+    }
+}
+//Abhishek Palase
+------------------------------------------------------------------------------------------
+//Abhishek Palase
+//server
+import java.io.*;
+import java.net.*;
+
+public class SumServer {
+    public static void main(String[] args) throws Exception {
+        ServerSocket ss = new ServerSocket(5000);
+        Socket s = ss.accept();
+
+        DataInputStream din = new DataInputStream(s.getInputStream());
+        DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+
+        int a = din.readInt();
+        int b = din.readInt();
+        int sum = a + b;
+        dout.writeInt(sum);
+
+        s.close();
+        ss.close();
+    }
+}
+//client
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class SumClient {
+    public static void main(String[] args) throws Exception {
+        Socket s = new Socket("localhost", 5000);
+
+        DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+        DataInputStream din = new DataInputStream(s.getInputStream());
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter first number: ");
+        int a = sc.nextInt();
+        System.out.print("Enter second number: ");
+        int b = sc.nextInt();
+
+        dout.writeInt(a);
+        dout.writeInt(b);
+
+        int sum = din.readInt();
+        System.out.println("Sum = " + sum);
+
+        s.close();
+    }
+}
+//Abhishek Palase

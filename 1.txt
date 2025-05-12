@@ -1,0 +1,123 @@
+import java.util.Scanner;
+
+public class Factorial {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int fact = 1;
+        for (int i = 1; i <= n; i++) {
+            fact = fact * i;
+        }
+        System.out.println(fact);
+    }
+}
+//Abhishek Palase
+-----------------------------------------------------------------------------------------
+public class PrimeCheck {
+    public static void main(String[] args) {
+        int n = Integer.parseInt(args[0]);
+        int c = 0;
+        for (int i = 1; i <= n; i++) {
+            if (n % i == 0) c++;
+        }
+        if (c == 2) System.out.println("Prime");
+        else System.out.println("Not Prime");
+    }
+}
+//Abhishek Palase
+-----------------------------------------------------------------------------------------
+import java.util.Scanner;
+
+public class SortNumbers {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] a = new int[10];
+        for (int i = 0; i < 10; i++) {
+            a[i] = sc.nextInt();
+        }
+        for (int i = 0; i < 10; i++) {
+            for (int j = i + 1; j < 10; j++) {
+                if (a[i] > a[j]) {
+                    int t = a[i];
+                    a[i] = a[j];
+                    a[j] = t;
+                }
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            System.out.print(a[i] + " ");
+        }
+    }
+}
+//Abhishek Palase
+-----------------------------------------------------------------------------------------
+import java.util.Scanner;
+
+public class MergeArrays {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] a = new int[5];
+        int[] b = new int[5];
+        int[] c = new int[10];
+        for (int i = 0; i < 5; i++) a[i] = sc.nextInt();
+        for (int i = 0; i < 5; i++) b[i] = sc.nextInt();
+        int i = 0, j = 0, k = 0;
+        while (i < 5 && j < 5) {
+            if (a[i] < b[j]) c[k++] = a[i++];
+            else c[k++] = b[j++];
+        }
+        while (i < 5) c[k++] = a[i++];
+        while (j < 5) c[k++] = b[j++];
+        for (int x = 0; x < 10; x++) System.out.print(c[x] + " ");
+    }
+}
+//Abhishek Palase
+-----------------------------------------------------------------------------------------
+import java.util.Scanner;
+
+public class MatrixOperations {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[][] a = new int[2][2];
+        int[][] b = new int[2][2];
+        int[][] c = new int[2][2];
+        for (int i = 0; i < 2; i++)
+            for (int j = 0; j < 2; j++) a[i][j] = sc.nextInt();
+        for (int i = 0; i < 2; i++)
+            for (int j = 0; j < 2; j++) b[i][j] = sc.nextInt();
+        int ch = sc.nextInt();
+        switch (ch) {
+            case 1:
+                for (int i = 0; i < 2; i++)
+                    for (int j = 0; j < 2; j++)
+                        c[i][j] = a[i][j] + b[i][j];
+                for (int i = 0; i < 2; i++) {
+                    for (int j = 0; j < 2; j++) System.out.print(c[i][j] + " ");
+                    System.out.println();
+                }
+                break;
+            case 2:
+                for (int i = 0; i < 2; i++)
+                    for (int j = 0; j < 2; j++) {
+                        c[i][j] = 0;
+                        for (int k = 0; k < 2; k++)
+                            c[i][j] += a[i][k] * b[k][j];
+                    }
+                for (int i = 0; i < 2; i++) {
+                    for (int j = 0; j < 2; j++) System.out.print(c[i][j] + " ");
+                    System.out.println();
+                }
+                break;
+            case 3:
+                for (int i = 0; i < 2; i++) {
+                    for (int j = 0; j < 2; j++) System.out.print(a[j][i] + " ");
+                    System.out.println();
+                }
+                break;
+            default:
+                System.out.println("Invalid Choice");
+        }
+    }
+}
+//Abhishek Palase
+-----------------------------------------------------------------------------------------

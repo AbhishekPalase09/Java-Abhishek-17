@@ -1,0 +1,134 @@
+public class Employee {
+    private String firstName;
+    private String lastName;
+    private double monthlySalary;
+
+    public Employee(String f, String l, double s) {
+        firstName = f;
+        lastName = l;
+        if (s > 0) monthlySalary = s;
+        else monthlySalary = 0.0;
+    }
+
+    public void setFirstName(String f) { firstName = f; }
+    public void setLastName(String l) { lastName = l; }
+    public void setMonthlySalary(double s) {
+        if (s > 0) monthlySalary = s;
+        else monthlySalary = 0.0;
+    }
+
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public double getMonthlySalary() { return monthlySalary; }
+}
+//Abhishek Palase
+------------------------------------------------------------------------------------------
+public class EmployeeTest {
+    public static void main(String[] args) {
+        Employee e1 = new Employee("A", "B", 5000);
+        Employee e2 = new Employee("X", "Y", 7000);
+
+        System.out.println(e1.getMonthlySalary() * 12);
+        System.out.println(e2.getMonthlySalary() * 12);
+
+        e1.setMonthlySalary(e1.getMonthlySalary() * 1.1);
+        e2.setMonthlySalary(e2.getMonthlySalary() * 1.1);
+
+        System.out.println(e1.getMonthlySalary() * 12);
+        System.out.println(e2.getMonthlySalary() * 12);
+    }
+}
+//Abhishek Palase
+
+------------------------------------------------------------------------------------------
+import java.util.Scanner;
+
+public class Area {
+    int l, b;
+
+    public void setDim(int x, int y) {
+        l = x;
+        b = y;
+    }
+
+    public int getArea() {
+        return l * b;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int c = sc.nextInt();
+        Area ob = new Area();
+        ob.setDim(a, c);
+        System.out.println(ob.getArea());
+    }
+}
+//Abhishek Palase
+
+------------------------------------------------------------------------------------------
+public class StaticDemo {
+    static int a;
+    static {
+        a = 10;
+        System.out.println("Static block executed");
+    }
+
+    static void show() {
+        System.out.println(a);
+    }
+
+    public static void main(String[] args) {
+        StaticDemo.show();
+    }
+}
+//Abhishek Palase
+
+------------------------------------------------------------------------------------------
+import java.util.Scanner;
+
+public class StackQueue {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] stack = new int[5];
+        int[] queue = new int[5];
+        int top = -1, front = 0, rear = -1;
+
+        for (int i = 0; i < 5; i++) {
+            int n = sc.nextInt();
+            stack[++top] = n;
+            queue[++rear] = n;
+        }
+
+        System.out.println("Stack:");
+        while (top >= 0) System.out.print(stack[top--] + " ");
+
+        System.out.println("\nQueue:");
+        while (front <= rear) System.out.print(queue[front++] + " ");
+    }
+}
+//Abhishek Palase
+
+------------------------------------------------------------------------------------------
+import java.util.Scanner;
+
+public class SortNames {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] n = new String[10];
+        for (int i = 0; i < 10; i++) n[i] = sc.nextLine();
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = i + 1; j < 10; j++) {
+                if (n[i].compareTo(n[j]) > 0) {
+                    String t = n[i];
+                    n[i] = n[j];
+                    n[j] = t;
+                }
+            }
+        }
+
+        for (int i = 0; i < 10; i++) System.out.println(n[i]);
+    }
+}
+//Abhishek Palase

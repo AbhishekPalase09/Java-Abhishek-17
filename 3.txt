@@ -1,0 +1,157 @@
+class BankAccount {
+    double balance;
+
+    public void deposit(double amt) {
+        balance += amt;
+    }
+
+    public void withdraw(double amt) {
+        balance -= amt;
+    }
+}
+
+class SavingsAccount extends BankAccount {
+    public void withdraw(double amt) {
+        if (balance - amt < 100)
+            System.out.println("Insufficient balance");
+        else
+            balance -= amt;
+    }
+
+    public static void main(String[] args) {
+        SavingsAccount s = new SavingsAccount();
+        s.deposit(500);
+        s.withdraw(450);
+        System.out.println(s.balance);
+        s.withdraw(50);
+        System.out.println(s.balance);
+    }
+}
+//Abhishek Palase
+------------------------------------------------------------------------------------------
+class Employee {
+    String name, address, jobTitle;
+    double salary;
+
+    public Employee(String n, String a, String j, double s) {
+        name = n;
+        address = a;
+        jobTitle = j;
+        salary = s;
+    }
+
+    public double bonus() {
+        return salary * 0.1;
+    }
+
+    public void report() {
+        System.out.println(name + " performance good");
+    }
+
+    public void project() {
+        System.out.println(name + " managing project");
+    }
+}
+
+class Manager extends Employee {
+    public Manager(String n, String a, String j, double s) {
+        super(n, a, j, s);
+    }
+}
+
+class Developer extends Employee {
+    public Developer(String n, String a, String j, double s) {
+        super(n, a, j, s);
+    }
+}
+
+class Programmer extends Employee {
+    public Programmer(String n, String a, String j, double s) {
+        super(n, a, j, s);
+    }
+}
+
+class Demo {
+    public static void main(String[] args) {
+        Manager m = new Manager("A", "Pune", "Manager", 50000);
+        Developer d = new Developer("B", "Mumbai", "Developer", 40000);
+        Programmer p = new Programmer("C", "Delhi", "Programmer", 35000);
+
+        System.out.println(m.bonus());
+        d.report();
+        p.project();
+    }
+}
+//Abhishek Palase
+
+------------------------------------------------------------------------------------------
+abstract class Shape {
+    double dim1, dim2;
+    abstract double area();
+}
+
+class Rectangle extends Shape {
+    public Rectangle(double a, double b) {
+        dim1 = a;
+        dim2 = b;
+    }
+
+    double area() {
+        return dim1 * dim2;
+    }
+}
+
+class Triangle extends Shape {
+    public Triangle(double a, double b) {
+        dim1 = a;
+        dim2 = b;
+    }
+
+    double area() {
+        return 0.5 * dim1 * dim2;
+    }
+}
+
+class DemoShape {
+    public static void main(String[] args) {
+        Rectangle r = new Rectangle(5, 4);
+        Triangle t = new Triangle(5, 4);
+        System.out.println(r.area());
+        System.out.println(t.area());
+    }
+}
+//Abhishek Palase
+
+------------------------------------------------------------------------------------------
+class Student {
+    int roll;
+    String name;
+}
+
+class Sub1 extends Student {
+    int m1, m2;
+}
+
+class Sub2 extends Sub1 {
+    int m3;
+}
+
+class Result extends Sub2 {
+    void show() {
+        int total = m1 + m2 + m3;
+        System.out.println("Roll: " + roll);
+        System.out.println("Name: " + name);
+        System.out.println("Total: " + total);
+    }
+
+    public static void main(String[] args) {
+        Result r = new Result();
+        r.roll = 1;
+        r.name = "Abhi";
+        r.m1 = 80;
+        r.m2 = 70;
+        r.m3 = 90;
+        r.show();
+    }
+}
+//Abhishek Palase

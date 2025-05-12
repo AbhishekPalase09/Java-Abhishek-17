@@ -1,0 +1,166 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.*;
+
+public class RestaurantBillingSystem extends JFrame implements ActionListener {
+
+    JLabel pizzaLabel, burgerLabel, drinkLabel;
+    JTextField pizzaQty, burgerQty, drinkQty;
+    JButton generateBillBtn, resetBtn, saveBillBtn, exitBtn;
+    JTextArea billArea;
+
+    public RestaurantBillingSystem() {
+        setTitle("Restaurant Billing System");
+        setSize(500, 650);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        // Layout setup
+        setLayout(new BorderLayout(10, 10));
+        getContentPane().setBackground(new Color(240, 248, 255));
+
+        // Header
+        JLabel header = new JLabel("Restaurant Billing System", JLabel.CENTER);
+        header.setFont(new Font("Arial", Font.BOLD, 24));
+        header.setForeground(Color.WHITE);
+        header.setOpaque(true);
+        header.setBackground(new Color(70, 130, 180));
+        add(header, BorderLayout.NORTH);
+
+        // Center Panel
+        JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
+        centerPanel.setBackground(new Color(245, 245, 245));
+        add(centerPanel, BorderLayout.CENTER);
+
+        // Input Panel for quantities
+        JPanel inputPanel = new JPanel(new GridLayout(3, 2, 5, 5));
+        inputPanel.setBackground(new Color(224, 255, 255));
+        inputPanel.setBorder(BorderFactory.createTitledBorder("Order Quantity"));
+
+        pizzaLabel = new JLabel("Pizza (Rs.150)");
+        pizzaQty = new JTextField("0");
+        burgerLabel = new JLabel("Burger (Rs.80)");
+        burgerQty = new JTextField("0");
+        drinkLabel = new JLabel("Cold Drink (Rs.50)");
+        drinkQty = new JTextField("0");
+
+        inputPanel.add(pizzaLabel);
+        inputPanel.add(pizzaQty);
+        inputPanel.add(burgerLabel);
+        inputPanel.add(burgerQty);
+        inputPanel.add(drinkLabel);
+        inputPanel.add(drinkQty);
+
+        centerPanel.add(inputPanel, BorderLayout.NORTH);
+
+        // Bill Area
+        billArea = new JTextArea();
+        billArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
+        billArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(billArea);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Bill Receipt"));
+        centerPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Button Panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttonPanel.setBackground(new Color(245, 245, 245));
+
+        generateBillBtn = new JButton("Generate Bill");
+        generateBillBtn.setBackground(new Color(60, 179, 113));
+        generateBillBtn.setForeground(Color.WHITE);
+        generateBillBtn.addActionListener(this);
+
+        resetBtn = new JButton("Reset");
+        resetBtn.setBackground(new Color(255, 140, 0));
+        resetBtn.setForeground(Color.WHITE);
+        resetBtn.addActionListener(this);
+
+        saveBillBtn = new JButton("Save Bill");
+        saveBillBtn.setBackground(new Color(34, 139, 34));
+        saveBillBtn.setForeground(Color.WHITE);
+        saveBillBtn.addActionListener(this);
+
+        exitBtn = new JButton("Exit");
+        exitBtn.setBackground(new Color(178, 34, 34));
+        exitBtn.setForeground(Color.WHITE);
+        exitBtn.addActionListener(this);
+
+        buttonPanel.add(generateBillBtn);
+        buttonPanel.add(resetBtn);
+        buttonPanel.add(saveBillBtn);
+        buttonPanel.add(exitBtn);
+
+        add(buttonPanel, BorderLayout.SOUTH);
+
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == generateBillBtn) {
+            int pizzaPrice = 150;
+            int burgerPrice = 80;
+            int drinkPrice = 50;
+
+            int qtyPizza = Integer.parseInt(pizzaQty.getText());
+            int qtyBurger = Integer.parseInt(burgerQty.getText());
+            int qtyDrink = Integer.parseInt(drinkQty.getText());
+
+            int totalPizza = qtyPizza * pizzaPrice;
+            int totalBurger = qtyBurger * burgerPrice;
+            int totalDrink = qtyDrink * drinkPrice;
+
+            int totalAmount = totalPizza + totalBurger + totalDrink;
+            double tax = totalAmount * 0.05;
+            double finalAmount = totalAmount + tax;
+
+            // Date and Time
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+
+            // Display bill
+            billArea.setText("       Restaurant Bill Receipt\n");
+            billArea.append("Date & Time : " + dateFormatter.format(date) + "\n");
+            billArea.append("----------------------------------------\n");
+            billArea.append("Item            Qty      Price\n");
+            billArea.append("----------------------------------------\n");
+            billArea.append("Pizza           " + qtyPizza + "       Rs." + totalPizza + "\n");
+            billArea.append("Burger          " + qtyBurger + "       Rs." + totalBurger + "\n");
+            billArea.append("Cold Drink      " + qtyDrink + "       Rs." + totalDrink + "\n");
+            billArea.append("----------------------------------------\n");
+            billArea.append("Total Items : " + (qtyPizza + qtyBurger + qtyDrink) + "\n");
+            billArea.append("Sub Total  : Rs." + totalAmount + "\n");
+            billArea.append("GST (5%)   : Rs." + String.format("%.2f", tax) + "\n");
+            billArea.append("----------------------------------------\n");
+            billArea.append("Final Amount : Rs." + String.format("%.2f", finalAmount) + "\n");
+            billArea.append("Thank you! Visit Again!\n");
+        }
+
+        if (e.getSource() == resetBtn) {
+            pizzaQty.setText("0");
+            burgerQty.setText("0");
+            drinkQty.setText("0");
+            billArea.setText("");
+        }
+
+        if (e.getSource() == saveBillBtn) {
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("BillReceipt.txt"));
+                writer.write(billArea.getText());
+                writer.close();
+                JOptionPane.showMessageDialog(this, "Bill saved as BillReceipt.txt!");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error saving bill!");
+            }
+        }
+
+        if (e.getSource() == exitBtn) {
+            dispose();
+        }
+    }
+
+    public static void main(String[] args) {
+        new RestaurantBillingSystem();
+    }
+}

@@ -1,0 +1,130 @@
+package Library;
+
+public class Book {
+    public void title(String t) {
+        System.out.println("Title: " + t);
+    }
+    public void author(String a) {
+        System.out.println("Author: " + a);
+    }
+    public void isbn(int is) {
+        System.out.println("ISBN: " + is);
+    }
+}
+
+package Library;
+
+public class Member {
+    public void name(String n) {
+        System.out.println("Member name: " + n);
+    }
+    public void id(int id) {
+        System.out.println("id: " + id);
+    }
+}
+
+import Library.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Book b = new Book();
+        Member m = new Member();
+
+        b.title("Wimpy Kids");
+        b.author("John Meckenly");
+        b.isbn(34325);
+
+        m.name("Abhishek");
+        m.id(17);
+    }
+}
+
+//Abhishek Palase
+---------------------------------------------------------------------------------------
+//Abhishek Palase
+
+package ecommerce;
+
+public class Product{
+     Product(String pname ){
+        System.out.println("Product name: "+pname);
+        
+    }
+}
+
+package ecommerce;
+
+public class Customer{
+     Customer(String cname){
+        System.out.println("Order Placed Successfully!");
+        System.out.println("Customer: "+cname);
+    }
+}
+
+package ecommerce;
+
+public class Order{
+     Order(int quantity, int price){
+        System.out.println("Quantity: "+quantity);
+        System.out.println("Price: "+price);
+        int total = quantity*price;
+        System.out.println("Total Price: "+total);
+    }
+}
+
+import ecommerce.*;
+
+public class Main{
+    public static void main(String[] args){
+       
+        Customer c = new Customer("Abhishek");
+         Product p = new Product("ear phones");
+        Order o = new Order(2,200);
+        
+    }
+}
+/* Output:
+ Order Placed Successfully!
+Customer: Abhishek
+Product name: ear phones
+Quantity: 2
+Price: 200
+Total Price: 400
+Abhishek Palase  \*  
+-----------------------------------------------------------------------------------------------
+package MathOperations;
+
+public class Operations {
+
+    public void floorValue(double num) {
+        System.out.println("Floor of " + num + " = " + Math.floor(num));
+    }
+
+    public void ceilValue(double num) {
+        System.out.println("Ceil of " + num + " = " + Math.ceil(num));
+    }
+
+    public void roundValue(double num) {
+        System.out.println("Round of " + num + " = " + Math.round(num));
+    }
+}
+
+import MathOperations.Operations;
+
+public class Main {
+    public static void main(String[] args) {
+        Operations op = new Operations();
+
+        op.floorValue(5.8);
+        op.ceilValue(5.3);
+        op.roundValue(5.5);
+        op.roundValue(5.4);
+    }
+}
+Output:
+Floor of 5.8 = 5.0
+Ceil of 5.3 = 6.0
+Round of 5.5 = 6
+Round of 5.4 = 5
+
+//Abhishek Palase
