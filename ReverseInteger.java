@@ -1,15 +1,15 @@
-public class ReverseInteger {
+import java.util.*;
 
-    public static void main(String[] args) {
-        int num = 12345;
-        int reversed = 0;
-
-        while (num != 0) {
-            int digit = num % 10;      // get last digit
-            reversed = reversed * 10 + digit; // build reversed number
-            num = num / 10;            // remove last digit
+class Solution {
+    public int reverse(int x) {
+       
+        int result = 0;
+        while(x !=0){
+            int digit = x%10;
+             result = result *10 + digit;
+            x = x/10;
+        
         }
-
-        System.out.println("Reversed number: " + reversed);
+        return result;
     }
 }
